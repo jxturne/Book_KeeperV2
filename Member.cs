@@ -13,10 +13,10 @@ namespace Book_KeeperV2
             public int id
         {
             get { return ID;  }
-            set;
+            set { id = value; }
         }
 
-
+        static List<Member> Userlist = new List<Member>();
         public static Member AddUser()
         {
             Console.WriteLine(" Hello do you have an account with us? yes / no");
@@ -40,6 +40,7 @@ namespace Book_KeeperV2
                     id = ID
 
                 };
+                Userlist.Add(newUser);
                 return newUser;
 
             }
