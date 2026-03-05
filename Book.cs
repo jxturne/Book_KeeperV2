@@ -15,27 +15,41 @@ namespace Book_KeeperV2
         //Book newbook = new Book();
         public static Dictionary<string, Book> Library = new Dictionary<string, Book>(StringComparer.OrdinalIgnoreCase);
 
-        public static Book AddBook()
+        public static Book? AddBook()
         {
             Console.WriteLine("Enter the name of the Book you want to add: ");
-            string title = Console.ReadLine();
-            Console.WriteLine("Enter the Author's name: ");
-            string author = Console.ReadLine();
-            Console.WriteLine("Enter the genre of the Book you want to add: ");
-            string genre = Console.ReadLine();
-            Console.WriteLine("Enter the number of stars you want to add: ");
-            if (!int.TryParse(Console.ReadLine(), out int starrating) || starrating < 0 || starrating>5 )
+            string? title = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(title))
             {
-                throw new ArgumentOutOfRangeException("Invalid value. Please enter a value 1 to 5. ");
-            }
-            Console.WriteLine("Would you reccomend this book true/false: ");
-            string ureccomend = Console.ReadLine();
-            if(!bool.TryParse(ureccomend, out bool reccomend))
-            {
-                throw new ArgumentException("Invalid boolean value. Please enter 'true' or 'false'.");
+                Console.WriteLine("Title cannot be empty.");
                 return null;
             }
-            
+
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                Console.WriteLine("Title cannot be empty.");
+                return null;
+            }
+
+            Console.WriteLine("Enter the Author's name: ");
+            string? author = Console.ReadLine();
+            Console.WriteLine("Enter the genre of the Book you want to add: ");
+            string? genre = Console.ReadLine();
+            Console.WriteLine("Enter the number of stars you want to add: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int starrating) || starrating < 0 || starrating > 5)
+            {
+                throw new ArgumentOutOfRangeException(nameof(starrating), "Invalid value. Star rating must be between 0 and 5.");
+            }
+            Console.WriteLine("Would you reccomend this book true/false: ");
+            string? ureccomend = Console.ReadLine();
+
+            if (!bool.TryParse(ureccomend, out bool reccomend))
+            {
+                throw new ArgumentException(nameof(reccomend), "Invalid boolean value. Please enter 'true' or 'false'.");
+                
+            }
+
 
             Book newbook = new Book
             {
@@ -99,13 +113,13 @@ namespace Book_KeeperV2
                 {
                     Console.WriteLine("Invalid value. Please enter a value 0 to 5. ");
                 }
-                
+
                 Console.WriteLine("Would you reccomend this book true/false: ");
                 string ureccomend = Console.ReadLine();
                 if (!bool.TryParse(ureccomend, out bool reccomend))
                 {
                     Console.WriteLine("Invalid boolean value. Please enter 'true' or 'false'.");
-                    
+
                 }
                 bookToEdit.Author = author;
                 bookToEdit.Genre = genre;
@@ -148,6 +162,11 @@ namespace Book_KeeperV2
             {
                 Console.WriteLine($"Title: {book.Value.Title}, Author: {book.Value.Author}, Genre: {book.Value.Genre}, Star Rating {book.Value.StarRating}, Would reccomend {book.Value.Reccomendation}");
             }
+        }
+
+        public override string ToString()
+        {
+            return $"Title: {Title}, Author: {Author}, Genre: {Genre}, Star Rating: {StarRating}, Reccomendation: {Reccomendation}";
         }
     }
 }

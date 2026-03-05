@@ -43,7 +43,7 @@ namespace Book_KeeperV2
                 throw new InvalidOperationException("Queue is empty");
             }
             T item = users[front];
-            front = (front + 1) % capacity; //circular queue logic
+            front = (front + 1) % capacity; //circular queue logic, first become last
             size--;
             return item;
         }

@@ -4,48 +4,91 @@
     {
         static void Main(string[] args)
         {
-            Myqueue<Member> Waitlist = new Myqueue<Member>(10); // Example usage of the queue with a capacity of 10 members
+            Myqueue<Member> Waitlist = new Myqueue<Member>(10); // Example usage of the waitlist with a capacity of 10 members, maybe a book club 
 
-            Waitlist.Enqueue(new Member { FName = "John", LName = "Doe", Email = "whatever", id = 1 });
-            Waitlist.Enqueue(new Member { FName = "Jane", LName = "Smith", Email = "whatever", id = 2 });
-            Waitlist.Enqueue(new Member { FName = "Bob", LName = "Johnson", Email = "whatever", id = 3 });
-            Waitlist.Count();
+            Waitlist.Enqueue(new Member { FName = "John", LName = "Doe", Email = "whatever@mail.com", Id = 1 });
+            Waitlist.Enqueue(new Member { FName = "Jane", LName = "Smith", Email = "whatever@mail.com", Id = 2 });
+            Waitlist.Enqueue(new Member { FName = "Bob", LName = "Johnson", Email = "whatever@mail.com", Id = 3 });
+            Console.WriteLine($"Waitlist count: {Waitlist.Count()}");
 
-            Book preload1 = new Book();
-                preload1.Title = "The Great Gatsby";
-                preload1.Author = "F. Scott Fitzgerald";
-                preload1.Genre = "Classic Fiction";
-                preload1.StarRating = 4;
-                preload1.Reccomendation = true;
-            Book preload2 = new Book();
-                preload2.Title = "To Kill a Mockingbird";
-                preload2.Author = "Harper Lee";
-                preload2.Genre = "Classic Fiction";
-                preload2.StarRating = 54;
-                preload2.Reccomendation = true;
-            Book preload3 = new Book();
-                preload3.Title = "Call of the Wild";
-                preload3.Author = "Jack London";
-                preload3.Genre = "Adventure Fiction";
-                preload3.StarRating = 4;
-                preload3.Reccomendation = true; 
-            Book preload4 = new Book();
-                preload4.Title = "The Chronicles of Nick";  
-                preload4.Author = "Sherrilyn Kenyon";
-                preload4.Genre = "Fantasy Fiction";
-                preload4.StarRating = 5;
-                preload4.Reccomendation = true;
-            Book preload5 = new Book();
-            preload5.Title = "Shadow and Bone";
-                preload5.Author = "Leigh Bardugo";
-                preload5.Genre = "Fantasy Fiction";
-                preload5.StarRating = 3;
-                preload5.Reccomendation = false;
+
+
+
+            Book preload1 = new Book
+            {
+                Title = "The Great Gatsby",
+                Author = "F. Scott Fitzgerald",
+                Genre = "Classic Fiction",
+                StarRating = 4,
+                Reccomendation = true
+
+            };
+
+            Book preload2 = new Book {
+                Title = "To Kill a Mockingbird",
+               Author = "Harper Lee",
+                Genre = "Classic Fiction",
+                StarRating = 3,
+                Reccomendation = true
+            };
+
+            Book preload3 = new Book { 
+               Title = "Call of the Wild",
+                Author = "Jack London",
+                Genre = "Adventure Fiction",
+               StarRating = 4,
+                Reccomendation = true
+                };
+
+            Book preload4 = new Book { 
+                Title = "The Chronicles of Nick",  
+                Author = "Sherrilyn Kenyon",
+                Genre = "Fantasy Fiction",
+                StarRating = 5,
+                Reccomendation = true
+            };
+
+            Book preload5 = new Book { 
+                Title = "Shadow and Bone",
+                Author = "Leigh Bardugo",
+                Genre = "Fantasy Fiction",
+                StarRating = 3,
+                Reccomendation = false
+            };
+
+            Book preload6 = new Book { 
+                Title = "Harry Potter and the Sorcerer's Stone",
+                Author = "J.K. Rowling",
+                Genre = "Fantasy Fiction",
+                StarRating = 4,
+                Reccomendation = true
+            };
+
+            Book preload7 = new Book { 
+                Title = "Harry Potter and the Chamber of Secrets",
+                Author = "J.K. Rowling",
+                Genre = "Fantasy Fiction",
+                StarRating = 3,
+                Reccomendation = true
+            };
+            Book preload8 = new Book { 
+                Title = "Harry Potter and the Prisoner of Azkaban",
+                Author = "J.K. Rowling",
+                Genre = "Fantasy Fiction",
+                StarRating = 4,
+                Reccomendation = true
+            };
+
             Book.Library.Add(preload1.Title, preload1);
             Book.Library.Add(preload2.Title, preload2);
             Book.Library.Add(preload3.Title, preload3);
             Book.Library.Add(preload4.Title, preload4);
             Book.Library.Add(preload5.Title, preload5);
+            Book.Library.Add(preload6.Title, preload6);
+            Book.Library.Add(preload7.Title, preload7);
+            Book.Library.Add(preload8.Title, preload8);
+    
+
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Hello, Welcome to BookKeeperV2");
@@ -54,10 +97,10 @@
             while (on)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("--------\nWould you like to \n1. Add a new Book, \n2. Remove a book \n3. View/Sort Book \n4. Search for a Book, \n5. Edit Book Information \n6. Exit the Application\n--------");
+                Console.WriteLine("--------\nWould you like to \n1. Add a new Book, \n2. Remove a book \n3. View/Sort Book \n4. Search for a Book \n5. Edit Book Information \n6. Exit the Application\n--------");
 
-                string input = Console.ReadLine();
-                if (int.TryParse(input, out int result) && result >= 1 && result <= 5) // this needs to check if the response is num 0-5
+                string? input = Console.ReadLine();
+                if (int.TryParse(input, out int result) && result >= 1 && result <= 6) // this needs to check if the response is num 1-6
                 {
                     
 
@@ -72,9 +115,9 @@
                             break;
                         case 3:
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Sort book by \n1. Ascending Star Rating 2. Sort by reccomendation  \n 3. Exit to Main Menu");//not completed Could be descending merge sort on would reccomendation Merge sort
+                            Console.WriteLine("--------\nSort book by \n1. Ascending Star Rating \n2. Sort by reccomendation  \n3. Exit to Main Menu\n--------");//not completed Could be descending merge sort on would reccomendation Merge sort
                             int ui = int.Parse(Console.ReadLine());
-                            if (ui >= 1 && ui <= 4)
+                            if (ui >= 1 && ui <= 3)
                             {
                                 if (ui == 1)
                                 {
@@ -82,61 +125,74 @@
                                     break;
 
                                 }
+
                                 if (ui == 2)//view all books that are reccomended true/false
                                 {
                                     Book.ViewReccomendedBooks();
                                     break;
                                 }
+
                                 if (ui == 3)
                                 {
                                     Console.WriteLine("Exiting to Main Menu");
                                     break;
 
                                 }
+
                                 else 
                                 break;
-
                             }
+
                             else
                             {
                                 Console.WriteLine("Invalid Option");
-                                continue;
+                                break;
                             }
+
                         case 4:
                             Console.ForegroundColor = ConsoleColor.Magenta;
-                            Console.WriteLine("Search books by \n1. Title \n2. Author \n3. BinarySearch  \n4. Exit ");
+                            Console.WriteLine("--------\nSearch books by \n1. By Title \n2. All books by Author \n3. BinarySearch(Development)  \n4.Dictionary search  \n5. Exit to main menu\n--------");
                             int ui2 = int.Parse(Console.ReadLine());
 
                             if (ui2 == 1)
                             {
-                                Console.WriteLine("What title");
+                                Console.WriteLine("Enter Title");
                                 string ust = Console.ReadLine();
-                                Console.WriteLine(Search.LinearSearchTitle(ust));
+                                Console.WriteLine(Search.LinearSearchTitle(ust).ToString());
                                 break;
                             }
+
                             else if (ui2 == 2)
                             {
-                                Console.WriteLine("What Author");
+                                Console.WriteLine("Enter Author");
                                 string usa = Console.ReadLine();
-                                Console.WriteLine(Search.LinearFirstSearchAuthor(usa));
+                                Console.WriteLine(Search.LinearSearchAllAuthor(usa).ToString());
                                 break;
                             }
+
                             else if (ui2 == 3) // still under development, need to create sorted list and then implement binary search on that list.`
                             {
-                                Console.WriteLine("Here's how many books in your library have 5 stars!");
-                                string usb = Console.ReadLine();
+                                Console.WriteLine("Search still Under Development");
+                                //string usb = Console.ReadLine();
                                 //Console.WriteLine(Search.BinarySearch(usb));
                                 break;
                             }
 
                             else if (ui2 == 4)
                             {
-                                Console.WriteLine(" Quick sort using the Dictionay");
+                                Console.WriteLine(" Quick search using the Dictionay");
                                 Book.SearchBookDictionary(); 
                                 break;
 
                             }
-                            return;
+
+                            else if (ui2 == 5)
+                            {
+                                Console.WriteLine("Exiting to Main Menu");
+                                break;
+                            }
+
+                            break;
 
                         case 5:
                             Console.ForegroundColor= ConsoleColor.DarkGreen;
@@ -145,7 +201,6 @@
 
 
                         case 6:
-                            Console.ForegroundColor = ConsoleColor.Cyan;
 
                             Console.ForegroundColor = ConsoleColor.White;
                             on = false;

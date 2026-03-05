@@ -13,50 +13,42 @@ namespace Book_KeeperV2
             {
                 if (string.Equals(book.Title, title, StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine(book);
-                    return book;
-
+                    Console.WriteLine($"Found book: {book.Title} by {book.Author}");
+                    return(book);
                 }
             }
+            Console.WriteLine("No book found with that title.");
             return null;
         }
            
         
 
-        public static Book LinearFirstSearchAuthor(string author)
+        public static  List<Book> LinearSearchAllAuthor(string author)
         {
+            List<Book> foundBooks = new List<Book>();
+
             foreach (var book in Book.Library.Values)
             {
                 if (string.Equals(book.Author, author, StringComparison.OrdinalIgnoreCase))
 
                 {
-                    Console.WriteLine(book);
-                    return book;
+                    foundBooks.Add(book);
                 }
             }
-            return null;
+            if (foundBooks.Count > 0)
+            {
+                Console.WriteLine($"Found {foundBooks.Count} book(s) by {author}:");
+                foreach(var books in foundBooks)
+                {
+                    Console.WriteLine($" {books.Title}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No books found by that author.");
+            }
+
+            return foundBooks;
         }
-
-
-        //public static Book BinarySearch(string reccomendations)// maybe show each time a book received 5 stars.
-        //{
-        //    // need sorted list  
-
-        //    int left = 0;
-        //    int right = sortedlist - 1;
-
-        //    while( left >= right)
-        //    {
-        //        int mid = (left + right) / 2;
-        //        if (sortedlist[mid].Reccomendation == reccomendations)
-        //            return sortedlist[mid];
-
-        //        if (sortedlist[mid].reccomendation < 0)
-        //        { left = mid + 1; }
-        //        else
-        //            right = mid - 1;
-        //    }
-        //    return null;
-        //}
     }
 }

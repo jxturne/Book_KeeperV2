@@ -9,12 +9,7 @@ namespace Book_KeeperV2
         public string? FName { get; set; }
         public string? LName { get; set; }
         public string? Email { get; set; }
-        private int ID { get; set; }
-            public int id
-        {
-            get { return ID;  }
-            set { ID = value; }  // ✅ Correct - sets the backing field
-        }
+        public int Id { get; set; }  
 
         static List<Member> Userlist = new List<Member>();
         public static Member AddUser()
@@ -37,7 +32,7 @@ namespace Book_KeeperV2
                     FName = fName,
                     LName = lName,
                     Email = email,
-                    id = ID
+                    Id = ID
 
                 };
                 Userlist.Add(newUser);
@@ -53,11 +48,36 @@ namespace Book_KeeperV2
             return null;
         }
 
-        public static void RemoveUser()
+        public static bool RemoveUser()
         {
             Console.WriteLine(" Please enter the ID # of the user you want to remove : ");
             string userremove = Console.ReadLine();
 
+            if (!int.TryParse(userremove, out int userId))
+            {
+                Console.WriteLine(" Invalid ID format. Please enter a valid number.");
+                return false;
+            }
+
+            Member memberToRemove = Userlist.Find(m => m.Id == userId);
+            if (memberToRemove == null)
+            {
+                Console.WriteLine(" User with that ID not found.");
+                return false;
+            }
+
+            Console.WriteLine($" Are you sure you want to remove {memberToRemove.FName} {memberToRemove.LName}? yes / no");
+            string confirmation = Console.ReadLine().ToLower();
+            
+            if (confirmation == "yes")
+            {
+                Userlist.Remove(memberToRemove);
+                Console.WriteLine(" User removed successfully.");
+                return true;
+            }
+            
+            Console.WriteLine(" Removal cancelled.");
+            return false;
         }
 
     }
