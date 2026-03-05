@@ -11,20 +11,28 @@ namespace Book_KeeperV2
         {
             foreach (var book in Book.Library.Values)
             {
-                if (book.Title == title)
+                if (string.Equals(book.Title, title, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine(book);
                     return book;
 
+                }
             }
             return null;
         }
+           
+        
 
-        public static Book LinearSearchAuthor(string author)
+        public static Book LinearFirstSearchAuthor(string author)
         {
             foreach (var book in Book.Library.Values)
             {
-                if (book.Author == author)
-                    return book;
+                if (string.Equals(book.Author, author, StringComparison.OrdinalIgnoreCase))
 
+                {
+                    Console.WriteLine(book);
+                    return book;
+                }
             }
             return null;
         }

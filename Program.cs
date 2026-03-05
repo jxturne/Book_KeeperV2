@@ -4,6 +4,12 @@
     {
         static void Main(string[] args)
         {
+            Myqueue<Member> Waitlist = new Myqueue<Member>(10); // Example usage of the queue with a capacity of 10 members
+
+            Waitlist.Enqueue(new Member { FName = "John", LName = "Doe", Email = "whatever", id = 1 });
+            Waitlist.Enqueue(new Member { FName = "Jane", LName = "Smith", Email = "whatever", id = 2 });
+            Waitlist.Enqueue(new Member { FName = "Bob", LName = "Johnson", Email = "whatever", id = 3 });
+            Waitlist.Count();
 
             Book preload1 = new Book();
                 preload1.Title = "The Great Gatsby";
@@ -48,10 +54,10 @@
             while (on)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("--------\nWould you like to \n1. Add a new Book, \n2. Remove a book \n3. View/Sort Book \n4. Search for a Book, \n5. Exit the Application\n--------");
+                Console.WriteLine("--------\nWould you like to \n1. Add a new Book, \n2. Remove a book \n3. View/Sort Book \n4. Search for a Book, \n5. Edit Book Information \n6. Exit the Application\n--------");
 
                 string input = Console.ReadLine();
-                if (int.TryParse(input, out int result) && result >= 1 && result <= 5) // this needs to check if the response is num 1-4
+                if (int.TryParse(input, out int result) && result >= 1 && result <= 5) // this needs to check if the response is num 0-5
                 {
                     
 
@@ -66,7 +72,7 @@
                             break;
                         case 3:
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Sort book by \n1. Ascending Star Rating 2.Placeholder sort() by bool? reccomendation?  \n 3. Exit to Main Menu");//not completed Could be descending merge sort on would reccomendation Merge sort
+                            Console.WriteLine("Sort book by \n1. Ascending Star Rating 2. Sort by reccomendation  \n 3. Exit to Main Menu");//not completed Could be descending merge sort on would reccomendation Merge sort
                             int ui = int.Parse(Console.ReadLine());
                             if (ui >= 1 && ui <= 4)
                             {
@@ -78,15 +84,16 @@
                                 }
                                 if (ui == 2)//view all books that are reccomended true/false
                                 {
-                                    Book.ViewRecommendedBooks();//not completed
+                                    Book.ViewReccomendedBooks();
                                     break;
                                 }
                                 if (ui == 3)
                                 {
-                                    //exit to main menu
-                                    return;
+                                    Console.WriteLine("Exiting to Main Menu");
+                                    break;
 
                                 }
+                                else 
                                 break;
 
                             }
@@ -96,33 +103,33 @@
                                 continue;
                             }
                         case 4:
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("Search books by \n1. Title \n 2. Author \n 3. BinarySearch  \n4. Exit ;");
-                            string ui2 = Console.ReadLine();
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.WriteLine("Search books by \n1. Title \n2. Author \n3. BinarySearch  \n4. Exit ");
+                            int ui2 = int.Parse(Console.ReadLine());
 
-                            if (ui2 == "1")
+                            if (ui2 == 1)
                             {
                                 Console.WriteLine("What title");
                                 string ust = Console.ReadLine();
                                 Console.WriteLine(Search.LinearSearchTitle(ust));
                                 break;
                             }
-                            else if (ui2 == "2")
+                            else if (ui2 == 2)
                             {
                                 Console.WriteLine("What Author");
                                 string usa = Console.ReadLine();
-                                Console.WriteLine(Search.LinearSearchAuthor(usa));
+                                Console.WriteLine(Search.LinearFirstSearchAuthor(usa));
                                 break;
                             }
-                            else if (ui2 == "3")
+                            else if (ui2 == 3) // still under development, need to create sorted list and then implement binary search on that list.`
                             {
-                                Console.WriteLine("Heres how many books in your library have 5 stars!");
+                                Console.WriteLine("Here's how many books in your library have 5 stars!");
                                 string usb = Console.ReadLine();
                                 //Console.WriteLine(Search.BinarySearch(usb));
                                 break;
                             }
 
-                            else if (ui2 == "4")
+                            else if (ui2 == 4)
                             {
                                 Console.WriteLine(" Quick sort using the Dictionay");
                                 Book.SearchBookDictionary(); 
@@ -131,9 +138,13 @@
                             }
                             return;
 
-
-
                         case 5:
+                            Console.ForegroundColor= ConsoleColor.DarkGreen;
+                            Book.EditBookInformation(); 
+                            break;
+
+
+                        case 6:
                             Console.ForegroundColor = ConsoleColor.Cyan;
 
                             Console.ForegroundColor = ConsoleColor.White;

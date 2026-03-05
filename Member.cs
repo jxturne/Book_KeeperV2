@@ -13,7 +13,7 @@ namespace Book_KeeperV2
             public int id
         {
             get { return ID;  }
-            set { id = value; }
+            set { ID = value; }  // ✅ Correct - sets the backing field
         }
 
         static List<Member> Userlist = new List<Member>();
@@ -55,6 +55,8 @@ namespace Book_KeeperV2
 
         public static void RemoveUser()
         {
+            Console.WriteLine(" Please enter the ID # of the user you want to remove : ");
+            string userremove = Console.ReadLine();
 
         }
 

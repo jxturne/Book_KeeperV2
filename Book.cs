@@ -13,7 +13,7 @@ namespace Book_KeeperV2
         public bool Reccomendation { get; set; }
 
         //Book newbook = new Book();
-        public static Dictionary<string, Book> Library = new Dictionary<string, Book>();
+        public static Dictionary<string, Book> Library = new Dictionary<string, Book>(StringComparer.OrdinalIgnoreCase);
 
         public static Book AddBook()
         {
@@ -24,10 +24,18 @@ namespace Book_KeeperV2
             Console.WriteLine("Enter the genre of the Book you want to add: ");
             string genre = Console.ReadLine();
             Console.WriteLine("Enter the number of stars you want to add: ");
-            int starrating = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int starrating) || starrating < 0 || starrating>5 )
+            {
+                throw new ArgumentOutOfRangeException("Invalid value. Please enter a value 1 to 5. ");
+            }
             Console.WriteLine("Would you reccomend this book true/false: ");
-            string reccomend = Console.ReadLine();
-            bool userreccomend = bool.Parse(reccomend);
+            string ureccomend = Console.ReadLine();
+            if(!bool.TryParse(ureccomend, out bool reccomend))
+            {
+                throw new ArgumentException("Invalid boolean value. Please enter 'true' or 'false'.");
+                return null;
+            }
+            
 
             Book newbook = new Book
             {
@@ -35,11 +43,20 @@ namespace Book_KeeperV2
                 Genre = genre,
                 StarRating = starrating,
                 Author = author,
-                Reccomendation = userreccomend
+                Reccomendation = reccomend
 
             };
-            Library.Add(newbook.Title, newbook);
-            return newbook;
+            if (Library.ContainsKey(newbook.Title))
+            {
+                Console.WriteLine("A book with this title already exists. Please choose a different title.");
+                return null;
+            }
+            else
+            {
+                Library.Add(newbook.Title, newbook);
+                Console.WriteLine($"{newbook.Title} added to Library! ");
+                return newbook;
+            }
 
 
 
@@ -56,9 +73,48 @@ namespace Book_KeeperV2
             else
             {
                 Library.Remove(BookToRemove);
+                Console.WriteLine($"{BookToRemove} removed from Library");
             }
 
         }
+
+        public static void EditBookInformation()
+        {
+            Console.WriteLine("Enter the name of the book you want to edit: ");
+            string BookEdit = Console.ReadLine();
+            if (!Library.ContainsKey(BookEdit))
+            {
+                Console.WriteLine("Book not found. Please enter another title");
+                return;
+            }
+            else
+            {
+                Book bookToEdit = Library[BookEdit];
+                Console.WriteLine("Enter the new Author's name: ");
+                string author = Console.ReadLine();
+                Console.WriteLine("Enter the new genre of the Book you want to add: ");
+                string genre = Console.ReadLine();
+                Console.WriteLine("Enter the new number of stars you want to add: ");
+                if (!int.TryParse(Console.ReadLine(), out int starrating) || starrating < 0 || starrating > 5)
+                {
+                    Console.WriteLine("Invalid value. Please enter a value 0 to 5. ");
+                }
+                
+                Console.WriteLine("Would you reccomend this book true/false: ");
+                string ureccomend = Console.ReadLine();
+                if (!bool.TryParse(ureccomend, out bool reccomend))
+                {
+                    Console.WriteLine("Invalid boolean value. Please enter 'true' or 'false'.");
+                    
+                }
+                bookToEdit.Author = author;
+                bookToEdit.Genre = genre;
+                bookToEdit.StarRating = starrating;
+                bookToEdit.Reccomendation = reccomend;
+                Console.WriteLine($"{bookToEdit.Title} has been updated! ");
+            }
+        }
+
         public static void SortBook() //ascending order based on starrating
         {
             Console.WriteLine(" Sort in ascending order based on Star Rating");
@@ -69,7 +125,7 @@ namespace Book_KeeperV2
                 Console.WriteLine($"Title: {book.Value.Title}, Author: {book.Value.Author}, Genre: {book.Value.Genre}, Star Rating {book.Value.StarRating}, Would reccomend {book.Value.Reccomendation}");
             }
         }
-        public static void SearchBookDictionary()
+        public static void SearchBookDictionary()//Using Unique key value aka Title for lookup
         {
             Console.WriteLine(" Enter the Title of the book ");
             string titlesearch = Console.ReadLine();
